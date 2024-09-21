@@ -25,10 +25,7 @@ jobs:
       run: npm run build
 
     - name: Install rsync
-      run: sudo apt-get install -y rsync
-
-    - name: Check rsync version
-      run: rsync --version
+      run: sudo apt-get update && sudo apt-get install -y rsync
 
     - name: Deploy to VPS
       env:
