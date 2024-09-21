@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import DateCalendarValue from './calender';
 
@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
 
   // State to control the popup visibility
   const [showPopup, setShowPopup] = useState(false);
-  const popupRef = useRef(null);
+  // const popupRef = useRef(null);
   const [showCalenderPopup, setShowCalenderPopup] = useState(false);
 
   // Function to toggle popup visibility
