@@ -1,6 +1,6 @@
 module.exports = {
     async loginUser(email, password) {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/user/login`;
+        const url = `${process.env.BACKEND_URI}/user/login`;
       
         const response = await fetch(url, {
           method: 'POST',
@@ -15,7 +15,7 @@ module.exports = {
     },
 
     async registerUser(fullname, email, password) {
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/user/register`;
+        const url = `${process.env.BACKEND_URI}/user/register`;
 
         const response = await fetch(url, {
           method: 'POST',
@@ -30,7 +30,7 @@ module.exports = {
     },
 
     async getTodoList(userId) {
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/todoList/homePage?userId=${userId}`;
+      const url = `${process.env.BACKEND_URI}/todoList/homePage?userId=${userId}`;
 
       const response = await fetch(url, {
         method: 'GET',
