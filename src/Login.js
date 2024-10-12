@@ -27,13 +27,11 @@ const Login = () => {
       if (email&& password) {
         try {
             const data = await loginUser(email, password);
-            console.log('data::', data);
             if (!data.ok) {
               setError('Invalid email or password');
               return;
             }
             const user = await data.json();
-            console.log(user.undefined);
             
             const userName = user.data.dataUser.fullname || "User"; // Default to "User" if name is not available.
             const userId = user.data.dataUser.userId;
