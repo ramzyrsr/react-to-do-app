@@ -35,7 +35,8 @@ const Login = () => {
             const user = await data.json();
             console.log(user.undefined);
             
-            const userName = user.undefined.dataUser.fullname || "User"; // Default to "User" if name is not available.
+            const userName = user.data.dataUser.fullname || "User"; // Default to "User" if name is not available.
+            const userId = user.data.dataUser.userId;
 
             localStorage.setItem('user', JSON.stringify({ ...user, name: userName }));
             // On success:
