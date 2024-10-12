@@ -1,8 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, TextField, Typography, Link } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useNavigate } from 'react-router-dom';
+import Modal from './Modal';
+import { registerUser } from './helper';
 
 const SignUp = () => {
+  const navigate = useNavigate(); // Initialize navigate
+
+  // state
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [retypePassword, setRetypePassword] = useState('');
+  const [error, setError] = useState('');
+  const [isModalOpen, setModalOpen] = useState(false); // State for modal visibility
+
+
+  const handleSignUp = async () => {
+    // Simple validation (replace with actual logic or API call)
+
+    const validateEmail = (value) => {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailPattern.test(value);
+    };
+
+    if (email && !validateEmail(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    } else {
+      setError('');
+    }
+
+    try {
+      if (name && email && password && password === retypePassword) {
+        const data = await registerUser(name, email, password);
+        if (!data.ok) {
+          setError('Invalid email or password');
+          return;
+        }
+
+        setModalOpen(true); // Open the modal on successful registration
+  
+        // Navigate to the login page after a short delay
+        setTimeout(() => {
+          navigate('/login');
+        }, 600); // Delay for 0.6 second
+      } else {
+        setError('Please fill in all fields correctly.');
+        return;
+      }
+    } catch (error) {
+      setError('Please fill in all fields correctly.');
+    }
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="flex bg-white rounded-lg shadow-lg max-w-4xl">
@@ -35,6 +87,8 @@ const SignUp = () => {
             fullWidth 
             margin="normal"
             className="mt-4"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <TextField 
             label="Email" 
@@ -42,6 +96,8 @@ const SignUp = () => {
             fullWidth 
             margin="normal"
             className="mt-4"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField 
             label="Password" 
@@ -49,6 +105,8 @@ const SignUp = () => {
             variant="outlined" 
             fullWidth 
             margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <TextField 
             label="Retype Password" 
@@ -56,13 +114,22 @@ const SignUp = () => {
             variant="outlined" 
             fullWidth 
             margin="normal"
+            value={retypePassword}
+            onChange={(e) => setRetypePassword(e.target.value)}
           />
+
+          {error && (
+              <Typography color="error" className="mt-4 text-center">
+                  {error}
+              </Typography>
+          )}
 
           <div className='mt-4'>
             <Button 
                 variant="contained" 
                 color="primary" 
                 className="mt-6 w-full py-2 bg-blue-500 text-white"
+                onClick={handleSignUp}
             >
                 Sign Up
             </Button>
@@ -78,6 +145,13 @@ const SignUp = () => {
           <img src="/images/illustration.png" alt="illustration" className="w-full h-full object-contain"/>
         </div>
       </div>
+
+      {/* Modal for registration success */}
+      <Modal
+        isOpen={isModalOpen} 
+        onClose={() => setModalOpen(false)}
+        message="Successfully registered!"
+      />
     </div>
   );
 }
