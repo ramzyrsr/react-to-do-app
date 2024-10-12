@@ -19,5 +19,21 @@ module.exports = {
         
         const data = response;
         return data;
+    },
+
+    async registerUser(fullname, email, password) {
+        const url = `${process.env.REACT_APP_BASE_URL}/user/register`;
+
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ fullname, email, password }),
+        });
+
+        const data = response;
+        return data;
+    },
     }
 }
