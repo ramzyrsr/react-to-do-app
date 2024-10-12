@@ -35,5 +35,18 @@ module.exports = {
         const data = response;
         return data;
     },
+
+    async getTodoList(userId) {
+      const url = `${process.env.REACT_APP_BASE_URL}/todoList/homePage?userId=${userId}`;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = response;
+      return data;
     }
 }
