@@ -38,7 +38,7 @@ const Login = () => {
             const userName = user.data.dataUser.fullname || "User"; // Default to "User" if name is not available.
             const userId = user.data.dataUser.userId;
 
-            localStorage.setItem('user', JSON.stringify({ ...user, name: userName }));
+            localStorage.setItem('user', JSON.stringify({ userId: userId, name: userName }));
             // On success:
             navigate('/'); // Redirect to Home page
             
